@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battlefield 1 Review</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+    background: url("images/BF1Background.jpg") no-repeat center center fixed;
+    background-size: cover;
+    color: #e0e0e0;
+    font-family: sans-serif;
+    padding: 20px;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+        h1 {
+            font-size: 28px;
+            color: #4d0303;
+            margin-bottom: 6px;
+        }
+
+        p {
+            font-size: 15px;
+            color: #220088;
+            margin-bottom: 25px;
+        }
+
+        /* LOCKED SYSTEM FRAMEWORK MATCHING YOUR EXACT SCALE */
+        .map-frame-container {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+            width: 100%;
+            max-width: 1024px; /* Perfectly frames your 1021px display width */
+            margin: 0 auto;
+            border: 2px solid #333;
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .map-frame-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Location Marker Pin Structural Configurations */
+        .marker-pin {
+            position: absolute;
+            width: 32px; 
+            height: 32px;
+            cursor: pointer;
+            /* Anchors the bottom point of the pin onto the map coordinates */
+            transform: translate(-50%, -100%);
+            transition: transform 0.1s ease;
+            z-index: 10;
+        }
+
+        .marker-pin:hover {
+            transform: translate(-50%, -100%) scale(1.25);
+        }
+
+        /* HARDCODED GRID COORDINATES FOR AN 1846x909 CANVAS ASPECT RATIO */
+        #somme { top: 43%; left: 28.45%; }
+        #verdun { top: 45.5%; left: 31%; }
+        #caporetto { top: 56.5%; left: 45%; }
+        #brusilov { top: 45%; left: 61.25%; }
+        #gallipoli { top: 83%; left: 63%; } /* Recalibrated to drop onto the lower peninsula */
+        .review-score {
+    margin-top: 10px;
+    font-size: 16px;
+    color: green;
+    text-align: center;
+}
+
+.score-circle {
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+
+    border-radius: 50%;
+    background: green;
+    color: white;
+
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 85%;
+    height: 75%;
+    background: rgba(0,0,0,0.95);
+
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+
+    z-index: 999;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup-video {
+    flex: 2;
+}
+
+.popup-review {
+    flex: 1;
+    color: white;
+    border-left: 2px solid #444;
+    padding-left: 15px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+
+    <h1>Battlefield 1 Review</h1>
+    <p>By Brandon Castillo</p>
+    <div class="review-score">
+    AUTHOR'S REVIEW: <span class="score-circle">8.8</span>
+</div>
+
+
+    <div class="map-frame-container">
+        <img src="images/WorldWarOneMap.jpg" alt="Battlefield 1 World War One Map">
+
+        <!-- SOMME -->
+        <div class="marker-pin" id="somme" onclick="showReview('somme')" title="The Somme">
+            <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+
+        <!-- VERDUN -->
+        <div class="marker-pin" id="verdun" onclick="showReview('verdun')" title="Verdun">
+            <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+
+        <!-- CAPORETTO -->
+        <div class="marker-pin" id="caporetto" onclick="showReview('caporetto')" title="Caporetto">
+            <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+
+        <!-- BRUSILOV / GALICIA -->
+        <div class="marker-pin" id="brusilov" onclick="showReview('brusilov')" title="Brusilov Offensive / Galicia">
+            <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+
+        <!-- GALLIPOLI -->
+        <div class="marker-pin" id="gallipoli" onclick="showReview('gallipoli')" title="Gallipoli">
+            <svg viewBox="0 0 24 24" fill="#ff0000"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+    </div>
+
+    <script>
+function showReview(battleKey) {
+    const data = reviews[battleKey];
+
+    document.getElementById("popupTitle").innerText = data.title;
+    document.getElementById("popupText").innerText = data.text;
+
+    document.getElementById("videoFrame").src = data.video;
+
+    document.getElementById("popup").classList.remove("hidden");
+}
+
+function closePopup() {
+    document.getElementById("popup").classList.add("hidden");
+    document.getElementById("videoFrame").src = "";
+}
+</script>
+    <script>
+    const reviews = {
+    somme: {
+        title: "Battle of the Somme",
+        text: "Again, as trench warfare had halted almost all advances at once on the Western Front, there was no way other than a deadly battle for a sense of single victory. On the first day of the Somme, it was and still is, considered the deadliest disaster in British military history. Over 60,000 casualties on day one of this battle, it would ultimately be the deadliest battle of World War 1, on the Western Front. DICE used 3D visualization progamming to accurately display the maps looks and details, all while using real photography and mapped scaling of the battlefield, and added it into the game for their grandchildren to see what went down. However, it is important to note that at such scale this battle was made out to be, there should have been level of intense combat and shortend map structure. There were more of the dead and injured in this battle, and it would make sense of the game to loom like 'the world was ending.'",
+        video: "https://www.youtube.com/embed/746h3QagkNQ"
+    },
+    verdun: {
+        title: "Battle of Verdun",
+        text: "As trench warfare started to completely halt all the advances of the Western Front, the Germans had to come up with a plan to throw off the French line. Their first sight? Verdun. They had to pass through the fortified positions outside the city, and ultimately advanced through. While a huge war was expected, there was no other way to declare victory over the Entente forces. The Germans made it through both Fort de Vaux and Samogneux in a intense but expensive victory. They were ultimately pushed back by the French. Their attack failed. It was the second deadliest battle of the Western Front, and the longest battle of World War 1. Because of such scale this battle was, DICE had to ultimately add branch out maps of both forts. They're smaller compared to the others - making it more chaotic, and team-playmaking and focused skill is the only way to win the match no matter what. The scenes of hell (literaly) the developers made the map to be a stronghold for focus and fun. They excelled at this area effectively. It is one of the most known and played maps throughout the entire span since the game's release. ",
+        video: "https://www.youtube.com/embed/7_3zd30GJzo"
+    },
+    caporetto: {
+        title: "Battle of Caporetto",
+        text: "As most of the deadliest battles came to thier close, two years after the Kingdom of Italy joined the war, they were still at a huge disembark against the Austro - Hungarians. With over 12 battles of the Isonzo, and a glorious, yet costly victory for the Italians, there would ultimately end up being 1.7 million casualties throughout both sides. One thing was to point out was the beauty of the White Alps this war was fought at. DICE developed one of the most cinematic maps of FPS - Shooter history in the Caporetto rampage, while ultimately balancing out the enjoyment for both players and the game itself.",
+        video: "https://www.youtube.com/embed/xx25IAewLHk"
+    },
+    brusilov: {
+        title: "Battle of Galicia",
+        text: "As German and Austro - Hungarian forces stormed into Russian territory, General Brusilov have to make an urgent and fierce offensive to take back what was once theirs. With over millions of troops fighting on both sides, it would later be crowned as the deadliest offensive of World War 1. While Battlefield 1 loves its cinematic scenes of war, they had every right to reveal the true scale of what went down here. Galicia is one of the many battles that occured in this offensive. But because DICE decided to prioritize gameplay mechanics and rooting for the player. It is portrayed as an enjoyable piece rather than historical accuracy.",
+        video: "https://www.youtube.com/embed/Te8n3OUGMvg"
+    },
+    gallipoli: {
+        title: "Battle of Gallipoli",
+        text: "As British and colonial forces storm the beaches of Gallipoli, their main goal is to immediately sieze the Ottoman ports. However, this comes at a steep price. Both sides suffer heavy amounts of casualties, and therefore, failed to take the beaches. It resulted in a disasterous defeat for the allied forces. Battlefield 1, and its near accurate scenes of the Cape Helles maps vastly show the hell of what was seen on that day. Because there it is essentially a team effort to win --> the operations mode of the game shows exactly what went down, while having fun with the game all at once.",
+        video: "https://www.youtube.com/embed/w1ybpZp_LtM"
+    }
+
+};
+
+    </script>
+<div id="popup" class="popup hidden">
+    
+    <div class="popup-video">
+        <iframe id="videoFrame" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="popup-review">
+        <h2 id="popupTitle"></h2>
+        <p id="popupText"></p>
+    </div>
+
+    <button onclick="closePopup()" class="close-btn">X</button>
+</div>
+</body>
+</html>
